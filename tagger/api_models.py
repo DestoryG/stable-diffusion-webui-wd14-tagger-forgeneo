@@ -1,45 +1,32 @@
-"""Purpose: Pydantic models for the API."""
-from typing import List, Dict
-
-from modules.api import models as sd_models  # pylint: disable=E0401
 from pydantic import BaseModel, Field
 
 
-class TaggerInterrogateRequest(sd_models.InterrogateRequest):
-    """Interrogate request model"""
+class InterrogateRequest(BaseModel):
+    image: str = Field(default="", title="Image", description="Image to interrogate")
     model: str = Field(
-        title='Model',
-        description='The interrogate model used.',
+        default="wd14-convnextv2-v2", title="Model", description="Model to use"
     )
-    threshold: float = Field(
-        title='Threshold',
-        description='The threshold used for the interrogate model.',
-        default=0.0,
-    )
-    queue: str = Field(
-        title='Queue',
-        description='name of queue; leave empty for single response',
-        default='',
-    )
+    threshold: float = Field(default=0.35, title="Threshold", description="Threshold")
+
+
+class TaggerInterrogateRequest(InterrogateRequest):
+    queue: str = Field(default="", title="Queue", description="Queue")
     name_in_queue: str = Field(
-        title='Name',
-        description='name to queue image as or use <sha256>. leave empty to '
-                    'retrieve the final response',
-        default='',
+        default="", title="Name in queue", description="Name in queue"
     )
 
 
-class TaggerInterrogateResponse(BaseModel):
-    """Interrogate response model"""
-    caption: Dict[str, Dict[str, float]] = Field(
-        title='Caption',
-        description='The generated captions for the image.'
-    )
+class InterrogateResponse(BaseModel):
+    caption: dict = Field(default=None, title="Caption", description="Caption")
+
+
+class TaggerInterrogateResponse(InterrogateResponse):
+    pass
 
 
 class TaggerInterrogatorsResponse(BaseModel):
-    """Interrogators response model"""
-    models: List[str] = Field(
-        title='Models',
-        description=''
+    models: list[str] = Field(
+        default_factory=list,
+        title="Models",
+        description="Available interrogator models",
     )
