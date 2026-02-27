@@ -1,3 +1,6 @@
+This is stable-diffusion-webui-wd14-tagger for the latest version of [Forge Neo](https://github.com/Haoming02/sd-webui-forge-classic/tree/neo), adapted for the latest Python 3.13 fixes, using Vibe coding.
+
+
 Tagger for [Automatic1111's WebUI](https://github.com/AUTOMATIC1111/stable-diffusion-webui)
 ---
 Interrogate booru style tags for single or multiple image files using various models, such as DeepDanbooru.
